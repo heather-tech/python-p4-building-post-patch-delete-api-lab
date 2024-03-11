@@ -58,23 +58,34 @@ def baked_goods():
         db.session.commit()
         return make_response(baked_good.to_dict(), 201)
 
-@app.route('/baked_good/<int:id>', methods=['GET', 'DELETE'])
-def baked_goods_by_id(id):
-    baked_good = BakedGood.query.filter_by(id=id).first()
+# @app.route('/baked_good/<int:id>', methods=['GET', 'DELETE'])
+# def baked_goods_by_id(id):
+#     baked_good = BakedGood.query.filter_by(id=id).first()
 
-    if request.method == 'GET':
-        resp_body = baked_good.to_dict()
-        status = 200
-        return make_response (resp_body, status)
+#     if request.method == 'GET':
+#         resp_body = baked_good.to_dict()
+#         status = 200
+#         return make_response (resp_body, status)
 
-    elif request.method == 'DELETE':
-        db.session.delete(baked_good)
-        db.session.commit()
+#     elif request.method == 'DELETE':
+#         db.session.delete(baked_good)
+#         db.session.commit()
     
         # resp_body = {"message": "successfully deleted"}
         # return make_response(resp_body, 200)
 
-        return make_response({'message': 'record successfully deleted'}, 200)
+        # return make_response({'message': 'record successfully deleted'}, 200)
+@app.route('/baked_goods/<int:id>', methods=['GET', 'DELETE'])
+def baked_goods_by_id(id):
+    baked_good = BakedGood.query.filter_by(id=id).first()
+
+    if request.method == 'GET':
+        return make_response(baked_good.to_dict(),  200 )
+
+    elif request.method == 'DELETE':
+        db.session.delete(baked_good)
+        db.session.commit()
+        return make_response({'message': 'record successfully deleted'}, 200 )
 
 
 @app.route('/baked_goods/by_price')
